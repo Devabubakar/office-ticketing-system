@@ -1,0 +1,17 @@
+extends baseEmail
+
+block content
+  p Hello #{firstName},
+  p You registered a Letter with the secretary !!🎉🙏
+  p  Kindly use this Ticket Number  to Track your letter #{_id}!
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target='_blank') Track Your Letter
+  p If you need any help with Tracking your next Letter, please don't hesitate to contact me!
+  p - Abubakar Ali, Admin
