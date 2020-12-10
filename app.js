@@ -86,3 +86,5 @@ module.exports = app;
 
 
 //Abubakar Ali 2020*//
+
+//git push <remote> --delete <branch>
