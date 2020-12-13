@@ -44,9 +44,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role || 'secretary'
   });
 
-  const url = `${req.protocol}://${req.get('host')}/api/v1/${newoffice._id}`;
-  console.log(url);
-  await new Email(newoffice, url).sendWelcome();
+  
+  
 
   createSendToken(newoffice, 201, req, res);
 });
