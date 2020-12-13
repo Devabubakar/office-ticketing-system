@@ -43,7 +43,7 @@ const Tickets = new mongoose.Schema({
             status: {
                 type: String,
                 enum: {
-                    values: ['Completed', 'Review'],
+                    values: ['Completed', 'Review', 'Incoming'],
                     message:
                         'Status is either Completed or under Review'
                 }
@@ -52,6 +52,33 @@ const Tickets = new mongoose.Schema({
     ]
 
 })
+
+// const progress = [
+//     {
+//         office: 1,
+//         timeIn: Date,
+//         timeOut: Date,
+//         status: 'Completed'
+//     },
+//     {
+//         office: 2,
+//         timeIn: Date,
+//         timeOut: Date,
+//         status: 'Completed'
+//     },
+//     {
+//         office: 3,
+//         timeIn: Date,
+//         timeOut: Date,
+//         status: 'Review'
+//     }
+//     ,{
+//         office: 4,
+//         timeIn: Date,
+//         timeOut: Date,
+//         status: 'Incoming'
+//     }
+// ]
 
 
 
