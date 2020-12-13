@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const DB = process.env.NODE_DB.replace(
     '<password>',
     process.env.NODE_DB_PASS
-)
+);
 
 mongoose.connect(DB,{
     useNewUrlParser:true,

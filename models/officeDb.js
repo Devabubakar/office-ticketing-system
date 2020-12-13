@@ -7,7 +7,7 @@ const OfficeSchema = new mongoose.Schema({
   
   name: {
     type: String,
-    required: [true, 'Please tell us your name!']
+    required: [true, 'Please tell us your Office name!']
   },
   email: {
     type: String,
@@ -16,11 +16,10 @@ const OfficeSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email']
   },
- 
   role: {
     type: String,
-    enum: ['secretary', 'deen', 'dvc','vc', 'admin'],
-    default: 'secretary'
+    enum: ['office', 'admin'],
+    default: 'office'
   },
   password: {
     type: String,
