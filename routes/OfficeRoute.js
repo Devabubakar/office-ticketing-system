@@ -1,6 +1,6 @@
 const express = require('express');
-const OfficeController = require('./../controllers/OfficeController');
-const authController = require('./../controllers/authController');
+const OfficeController = require('../controllers/OfficeController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
