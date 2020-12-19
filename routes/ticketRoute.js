@@ -4,7 +4,7 @@ const authController = require('./../controllers/authController');
 
 const Router = express.Router()
 
-// Router.use(authController.protect);
+Router.use(authController.protect);
 
 
 Router

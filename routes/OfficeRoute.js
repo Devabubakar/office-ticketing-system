@@ -14,22 +14,20 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 // // // Protect all routes after this middleware
 router.use(authController.protect);
 
-
-
-router.use(authController.restrictTo('admin'));
-
-router.post('/signup', authController.signup);
 router.patch('/updatepassword', authController.updatePassword);
-router.get('/me', OfficeController.getMe, OfficeController.getOffice);
 router.patch(
   '/updateMe',
   OfficeController.updateMe
 );
+
+router.use(authController.restrictTo('admin'));
+
+router.post('/create',authController.createOffice)
+router.post('/signup', authController.signup);
+router.get('/me', OfficeController.getMe, OfficeController.getOffice);
 router.delete('/deleteMe', OfficeController.deleteMe);
-router
-  .route('/')
-  .get(OfficeController.getAllOffices)
-  .post(OfficeController.createOffice);
+router.get('/alloffice',OfficeController.getAllOffices)
+  
 
 router
   .route('/:id')

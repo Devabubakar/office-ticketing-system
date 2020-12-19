@@ -34,7 +34,6 @@ const createSendToken = (office, statusCode, req, res) => {
     }
   });
 };
-
 exports.signup = catchAsync(async (req, res, next) => {
   const newoffice = await Office.create({
     name: req.body.name,
@@ -43,26 +42,30 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role || 'office'
   });
-
-  
-
-
-  // 1) Check if email and password exist
-  if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
-  }
-  // 2) Check if user exists && password is correct
-  const office = await Office.findOne({ email }).select('+password');
-
-  if (!office || !(await office.correctPassword(password, office.password))) {
-    return next(new AppError('Incorrect email or password', 401));
-  }
-
   // 3) If everything ok, send token to client
-  createSendToken(office, 200, req, res);
+  createSendToken(newoffice, 200, req, res);
   
 });
+exports.createOffice = catchAsync(async(req,res,next)=>{
+  const newoffice = await Office.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
+    role: req.body.role || 'office'
+  });
 
+  res.status(201).json({
+    status:'success',
+    data:{
+      newoffice
+    }
+  })
+
+  
+
+  
+})
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -79,6 +82,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) If everything ok, send token to client
   createSendToken(user, 200, req, res);
+  console.log(user.email)
 });
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
@@ -166,7 +170,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    // roles ['admin', 'lead-guide']. role='user'
+    // roles ['admin']. role='user'
     if (!roles.includes(req.office.role)) {
       return next(
         new AppError('You do not have permission to perform this action', 403)
