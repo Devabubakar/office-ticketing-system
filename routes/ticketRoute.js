@@ -15,11 +15,14 @@ Router
 .post(ticketController.createTicket)
 .get(ticketController.getAllTickets)
 
+
+
 Router
 .route('/:id')
 .get(ticketController.getTicket)
 .delete(ticketController.deleteTicket)
 .patch(ticketController.updateTicket)
+.post(ticketController.newTicket)
 
 // Router.route('/mytickets').get(tourController.getMyTickets)
 module.exports = Router

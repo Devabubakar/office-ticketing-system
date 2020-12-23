@@ -8,7 +8,7 @@ const OfficeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please tell us your Office name!'],
-    enum:['secretary','cod','dvc','vc']
+    enum:['secretary','cod','dvc','vc','admin']
   },
   email: {
     type: String,

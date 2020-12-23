@@ -56,18 +56,17 @@ exports.getTicket = catchAsync(async(req,res,next)=>{
 
 exports.getAllTickets = catchAsync(async(req,res,next)=>{
     let tickets = await Tickets.find()
-    
 
-    if(!tickets){
-        return next(new AppError('No ticket Created',404))
-    }
-     
-     tickets.forEach((elem)=>{
-      if(!elem.route.includes(req.office.name)){
-       return  next (new AppError('No new ticket Has arrived in your office', 200))
+    //authorizes only letters specified to current office
+    for(let i =0 ; i <tickets.length;i++){
+      if(!tickets[i].route.includes(req.office.name)){
+        return res.status(200).json({
+          status:'success',
+          message:'No new letter has arrived in the office'
+
+        })
       }
-       
-     })
+    }
    
     
     res.status(200).json({
@@ -117,3 +116,25 @@ exports.updateTicket = catchAsync(async (req, res, next) => {
   });
 
 
+exports.newTicket = catchAsync(async(req,res,next)=>{
+  const query = req.body
+  const ticket = await Tickets.findById(req.params.id)
+  
+
+  await ticket.progress.push(query)
+
+  if (!ticket) {
+    return next(new AppError('No ticket found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      ticket
+    }
+  
+});
+
+  
+
+})
