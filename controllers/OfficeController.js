@@ -50,6 +50,8 @@ exports.createOffice = (req, res) => {
   });
 };
 
+
+
 exports.getOffice = factory.getOne(Office);
 exports.getAllOffices = factory.getAll(Office);
 

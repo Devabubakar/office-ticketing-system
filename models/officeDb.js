@@ -7,7 +7,8 @@ const OfficeSchema = new mongoose.Schema({
   
   name: {
     type: String,
-    required: [true, 'Please tell us your Office name!']
+    required: [true, 'Please tell us your Office name!'],
+    enum:['secretary','cod','dvc','vc']
   },
   email: {
     type: String,
@@ -108,6 +109,7 @@ OfficeSchema.methods.createPasswordResetToken = function() {
 
   return resetToken;
 };
+
 
 const Office = mongoose.model('Office', OfficeSchema);
 

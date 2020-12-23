@@ -31,27 +31,39 @@ const Tickets = new mongoose.Schema({
         type: String,
         required: true
     },
+    route:[String],
     progress: [
         {
-            office: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Office',
-                required: 'A letter must be connected to an office'
-            },
+            // office: {
+            //     type: mongoose.Schema.ObjectId,
+            //     ref: 'Office',
+            //     required: 'A letter must be connected to an office'
+            // },
+           
             timeIn: Date,
             timeOut: Date,
             status: {
                 type: String,
+                default:"Review",
                 enum: {
                     values: ['Completed', 'Review', 'Incoming'],
                     message:
-                        'Status is either Completed or under Review'
+                        'Status is either Completed or under Review',
+                    
                 }
+
             }
         }
+        
     ]
-
 })
+
+Tickets.pre('save', function(next) {
+    this.populate('Office');
+  
+    next();
+  });
+ 
 
 // const progress = [
 //     {

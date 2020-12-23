@@ -1,15 +1,21 @@
 const Tickets = require('../models/ticketDb')
 const catchAsync = require('../utils/catchasync')
 const AppError = require('../utils/appError')
+const Office = require('../models/officeDb')
 
 const Email = require('../utils/email');
 
 
-exports.createTicket = catchAsync(async(req,res,next)=>{
 
+exports.createTicket = catchAsync(async(req,res,next)=>{
+      
    
 
     const ticket =  await Tickets.create(req.body)
+    
+    
+  
+     
     res.status(201).json({
         status:'success',
         message:'Ticket created Successfully!',
@@ -17,11 +23,12 @@ exports.createTicket = catchAsync(async(req,res,next)=>{
 
        
     })
+    
 
     
     
 
-    const url = `${req.protocol}://${req.get('host')}/api/v1/tickets/${ticket._id}`;
+    const url = `${req.protocol}://${req.get('host')}/api/v1/tickets/${ticket.ticketNo}`;
     
   
    
@@ -48,11 +55,20 @@ exports.getTicket = catchAsync(async(req,res,next)=>{
 })
 
 exports.getAllTickets = catchAsync(async(req,res,next)=>{
-    const tickets = await Tickets.find()
+    let tickets = await Tickets.find()
+    
 
     if(!tickets){
         return next(new AppError('No ticket Created',404))
     }
+     
+     tickets.forEach((elem)=>{
+      if(!elem.route.includes(req.office.name)){
+       return  next (new AppError('No new ticket Has arrived in your office', 200))
+      }
+       
+     })
+   
     
     res.status(200).json({
         status:'success',
@@ -82,7 +98,7 @@ exports.deleteTicket = catchAsync(async(req,res,next)=>{
     
 
 })
-exports.updateTour = catchAsync(async (req, res, next) => {
+exports.updateTicket = catchAsync(async (req, res, next) => {
     const ticket = await Tickets.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -99,3 +115,5 @@ exports.updateTour = catchAsync(async (req, res, next) => {
       }
     });
   });
+
+
