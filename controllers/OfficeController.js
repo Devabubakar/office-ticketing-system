@@ -5,7 +5,7 @@ const factory = require('./handlerFactory');
 
 
 exports.getMe = (req, res, next) => {
-  req.params.id = req.Office.id;
+  req.params.id = req.office.id;
   next();
 };
 
@@ -35,7 +35,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await Office.findByIdAndUpdate(req.Office.id, { active: false });
+  await Office.findByIdAndUpdate(req.office.id, { active: false });
 
   res.status(204).json({
     status: 'success',

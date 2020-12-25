@@ -69,11 +69,11 @@ exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET reviews on tour (hack)
     
-    if (req.params.tourId) query = { tour: req.params.tourId };
+    let query = await Model.find()
 
 
     // const doc = await features.query.explain();
-    const doc = await features.query;
+    const doc = await query;
 
     // SEND RESPONSE
     res.status(200).json({

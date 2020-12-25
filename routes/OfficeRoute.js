@@ -20,11 +20,15 @@ router.patch(
   '/updateMe',
   OfficeController.updateMe
 );
+router.get('/me', OfficeController.getMe, OfficeController.getOffice);
 
+//Admin//
+/*
+  Restricted Zone
+*/
 router.use(authController.restrictTo('admin'));
 
 router.post('/create',authController.createOffice)
-router.get('/me', OfficeController.getMe, OfficeController.getOffice);
 router.delete('/deleteMe', OfficeController.deleteMe);
 router.get('/alloffice',OfficeController.getAllOffices)
   
