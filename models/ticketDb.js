@@ -52,16 +52,13 @@ const Tickets = new mongoose.Schema({
             }
         }  
     ]
-},{
-    toJSON:{virtuals:true},
-    toObject:{virtuals:true}
 })
 
-Tickets.pre('save', function(next) {
-    this.populate('Office');
+// Tickets.pre('save', function(next) {
+//     this.populate('Office');
   
-    next();
-  });
+//     next();
+//   });
  
 
 // const progress = [
