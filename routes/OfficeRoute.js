@@ -21,7 +21,7 @@ router.patch(
   OfficeController.updateMe
 );
 
-// router.use(authController.restrictTo('admin'));
+router.use(authController.restrictTo('admin'));
 
 router.post('/create',authController.createOffice)
 router.get('/me', OfficeController.getMe, OfficeController.getOffice);
