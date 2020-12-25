@@ -8,3 +8,8 @@ class AppError extends Error {
 }
 
 module.exports = AppError
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

@@ -115,3 +115,8 @@ OfficeSchema.methods.createPasswordResetToken = function() {
 const Office = mongoose.model('Office', OfficeSchema);
 
 module.exports = Office;
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

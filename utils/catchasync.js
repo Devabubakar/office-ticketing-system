@@ -5,3 +5,7 @@ module.exports = fn =>{
     }
 }
 
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

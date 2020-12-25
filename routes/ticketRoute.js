@@ -29,3 +29,8 @@ Router
 
 // Router.route('/mytickets').get(tourController.getMyTickets)
 module.exports = Router
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

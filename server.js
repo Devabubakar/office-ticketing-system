@@ -43,3 +43,9 @@ process.on('SIGTERM', () => {
     console.log('💥 Process terminated!');
   });
 });
+
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

@@ -75,3 +75,8 @@ module.exports = class Email {
     );
   }
 };
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

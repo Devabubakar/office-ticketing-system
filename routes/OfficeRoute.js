@@ -40,3 +40,8 @@ router
   .delete(OfficeController.deleteOffice);
 
 module.exports = router;
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

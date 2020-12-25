@@ -103,3 +103,8 @@ module.exports = (err, req, res, next) => {
     sendErrorProd(error, req, res);
   }
 };
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

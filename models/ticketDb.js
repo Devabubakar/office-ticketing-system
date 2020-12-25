@@ -54,7 +54,10 @@ const Tickets = new mongoose.Schema({
     ]
 })
 
-
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */
 
 
 

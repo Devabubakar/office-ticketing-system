@@ -84,6 +84,11 @@ app.use(globalErrorHandler);
 
 module.exports = app;
 
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */
+
 
 //Abubakar Ali 2020*//
 

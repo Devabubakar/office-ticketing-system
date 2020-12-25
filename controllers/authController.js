@@ -245,6 +245,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
+
   
   
   // 1) Get user from collection
@@ -264,3 +265,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log user in, send JWT
   createSendToken(office, 200, req, res);
 });
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

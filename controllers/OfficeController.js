@@ -58,3 +58,8 @@ exports.getAllOffices = factory.getAll(Office);
 // Do NOT update passwords with this!
 exports.updateOffice = factory.updateOne(Office);
 exports.deleteOffice = factory.deleteOne(Office);
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */
