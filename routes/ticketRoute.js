@@ -7,6 +7,10 @@ const { route } = require('./OfficeRoute');
 
 const Router = express.Router()
 
+Router
+.route('/:id')
+.get(ticketController.getTicket)
+
 Router.use(authController.protect);
 
 
@@ -19,7 +23,6 @@ Router
 
 Router
 .route('/:id')
-.get(ticketController.getTicket)
 .delete(ticketController.deleteTicket)
 .patch(ticketController.updateTicket)
 .post(ticketController.newTicket)

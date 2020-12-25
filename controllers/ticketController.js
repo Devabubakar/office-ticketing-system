@@ -1,11 +1,9 @@
 const Tickets = require('../models/ticketDb')
 const catchAsync = require('../utils/catchasync')
 const AppError = require('../utils/appError')
-const Office = require('../models/officeDb')
+
 
 const Email = require('../utils/email');
-
-
 
 exports.createTicket = catchAsync(async(req,res,next)=>{
   // Adding office name to req.body automatically
@@ -28,14 +26,17 @@ exports.createTicket = catchAsync(async(req,res,next)=>{
 
 
     //Send Tracking Token to the student
-    const url = `${req.protocol}://${req.get('host')}/api/v1/tickets/${ticket.ticketNo}`;
+    const url = `${req.protocol}://${req.get('host')}/api/v1/tickets/${ticket._id}`;
     await new Email(ticket, url).sendWelcome();
 
     
 })
-
 exports.getTicket = catchAsync(async(req,res,next)=>{
     const ticket = await Tickets.findById(req.params.id)
+
+    if(!ticket){
+      return next (new AppError('No ticket found with that ID',404))
+    }
 
     //Progress of the letter
     let progress = ticket.progress
@@ -46,17 +47,14 @@ exports.getTicket = catchAsync(async(req,res,next)=>{
 
     
 
-    if(!ticket){
-      return next (new AppError('No ticket found with that ID',404))
-    }
+   
 
     
 })
-
-
-
 exports.getAllTickets = catchAsync(async(req,res,next)=>{
     let tickets = await Tickets.find()
+    
+    
 
     //No letter has been created
     if(!tickets){
@@ -74,6 +72,7 @@ exports.getAllTickets = catchAsync(async(req,res,next)=>{
         })
       }
     }
+ 
    
     
     res.status(200).json({
@@ -85,18 +84,12 @@ exports.getAllTickets = catchAsync(async(req,res,next)=>{
     })
 
 
-    //Check if all the progress has been reached and alert the user through email
-    for(let i =0 ; i < tickets.length; i++){
-       if(tickets[i].progress.length === tickets[i].route.length){
-         return   new Email(ticket, url).sendWelcome();
-       }
-    }
+   
 
     
     
 
 })
-
 exports.deleteTicket = catchAsync(async(req,res,next)=>{
     const ticket = await Tickets.findByIdAndDelete(req.params.id)
 
@@ -138,7 +131,7 @@ exports.newTicket = catchAsync(async(req,res,next)=>{
   }
 
     //authorizes only letters specified to current office
-    console.log(ticket)
+    
       
         if(!ticket.route.includes(req.office.name)){
           return next(new AppError('You are not authorized to access this ticket',404))
@@ -153,6 +146,7 @@ exports.newTicket = catchAsync(async(req,res,next)=>{
      }
 
     }
+      
 
     //add office name automatically to req.body
     let query = req.body
@@ -163,11 +157,18 @@ exports.newTicket = catchAsync(async(req,res,next)=>{
     //edits the status of the letters in the progress object
     const letter =  await ticket.progress.push(query)
     await ticket.save(letter)
-    // console.log(letter)
+    
 
-  if (!letter) {
-    return next(new AppError('No ticket found with that ID', 404));
-  }
+    //If The letter has reached every office and request the user to came for a reply
+    if(ticket.progress.length > ticket.route.length){
+      
+    const url = `${req.protocol}://${req.get('host')}/api/v1/tickets/${ticket._id}`;
+    await new Email(ticket, url).Complete();
+    
+      
+    }
+
+    
 
   res.status(200).json({
     status: 'success',
@@ -180,3 +181,8 @@ exports.newTicket = catchAsync(async(req,res,next)=>{
   
 
 })
+
+/*
+  Copyright @ Abubakar Ali 
+  Dec 2020
+ */

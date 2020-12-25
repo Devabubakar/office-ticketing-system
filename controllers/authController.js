@@ -82,7 +82,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) If everything ok, send token to client
   createSendToken(user, 200, req, res);
-  console.log(user.email)
+ 
 });
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {

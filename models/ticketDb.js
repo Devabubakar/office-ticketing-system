@@ -54,39 +54,7 @@ const Tickets = new mongoose.Schema({
     ]
 })
 
-// Tickets.pre('save', function(next) {
-//     this.populate('Office');
-  
-//     next();
-//   });
- 
 
-// const progress = [
-//     {
-//         office: 1,
-//         timeIn: Date,
-//         timeOut: Date,
-//         status: 'Completed'
-//     },
-//     {
-//         office: 2,
-//         timeIn: Date,
-//         timeOut: Date,
-//         status: 'Completed'
-//     },
-//     {
-//         office: 3,
-//         timeIn: Date,
-//         timeOut: Date,
-//         status: 'Review'
-//     }
-//     ,{
-//         office: 4,
-//         timeIn: Date,
-//         timeOut: Date,
-//         status: 'Incoming'
-//     }
-// ]
 
 
 

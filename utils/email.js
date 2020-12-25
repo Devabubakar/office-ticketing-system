@@ -61,6 +61,12 @@ module.exports = class Email {
   async sendWelcome() {
     await this.send('welcome', 'Office Ticketing System!');
   }
+  async Complete(){
+    await this.send(
+      'complete',
+      'Your Response ticket is Ready . Come and Collect it'
+    )
+  }
 
   async sendPasswordReset() {
     await this.send(

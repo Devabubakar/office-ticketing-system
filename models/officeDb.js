@@ -7,6 +7,7 @@ const OfficeSchema = new mongoose.Schema({
   
   name: {
     type: String,
+    unique:true,
     required: [true, 'Please tell us your Office name!'],
     enum:['secretary','cod','dvc','vc','admin']
   },
