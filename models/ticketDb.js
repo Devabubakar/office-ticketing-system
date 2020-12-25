@@ -34,12 +34,9 @@ const Tickets = new mongoose.Schema({
     route:[String],
     progress: [
         {
-            // office: {
-            //     type: mongoose.Schema.ObjectId,
-            //     ref: 'Office',
-            //     required: 'A letter must be connected to an office'
-            // },
-           
+            office:{
+                type:String 
+            },
             timeIn: Date,
             timeOut: Date,
             status: {
@@ -53,9 +50,11 @@ const Tickets = new mongoose.Schema({
                 }
 
             }
-        }
-        
+        }  
     ]
+},{
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true}
 })
 
 Tickets.pre('save', function(next) {
