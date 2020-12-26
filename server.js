@@ -10,17 +10,14 @@ process.on('uncaughtException', err => {
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
-const DB = process.env.NODE_DB.replace(
-  '<password>',
-  process.env.NODE_DB_PASS
-);
+const DB = process.env.NODE_DB.replace('<password>', process.env.NODE_DB_PASS);
 
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology:true
+    useUnifiedTopology: true
   })
   .then(() => console.log('DB connection successful!'));
 
@@ -43,7 +40,6 @@ process.on('SIGTERM', () => {
     console.log('💥 Process terminated!');
   });
 });
-
 
 /*
   Copyright @ Abubakar Ali 

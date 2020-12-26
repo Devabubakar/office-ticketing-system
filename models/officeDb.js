@@ -4,12 +4,11 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const OfficeSchema = new mongoose.Schema({
-  
   name: {
     type: String,
-    unique:true,
+    unique: true,
     required: [true, 'Please tell us your Office name!'],
-    enum:['secretary','cod','dvc','vc','admin']
+    enum: ['secretary', 'cod', 'dvc', 'vc', 'admin']
   },
   email: {
     type: String,
@@ -34,7 +33,7 @@ const OfficeSchema = new mongoose.Schema({
     required: [true, 'Please confirm your password'],
     validate: {
       // This only works on CREATE and SAVE!!!
-      validator: function(el) {
+      validator: function (el) {
         return el === this.password;
       },
       message: 'Passwords are not the same!'
@@ -50,7 +49,7 @@ const OfficeSchema = new mongoose.Schema({
   }
 });
 
-OfficeSchema.pre('save', async function(next) {
+OfficeSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
 
@@ -62,27 +61,27 @@ OfficeSchema.pre('save', async function(next) {
   next();
 });
 
-OfficeSchema.pre('save', function(next) {
+OfficeSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
-OfficeSchema.pre(/^find/, function(next) {
+OfficeSchema.pre(/^find/, function (next) {
   // this points to the current query
   this.find({ active: { $ne: false } });
   next();
 });
 
-OfficeSchema.methods.correctPassword = async function(
+OfficeSchema.methods.correctPassword = async function (
   candidatePassword,
   officePassword
 ) {
   return await bcrypt.compare(candidatePassword, officePassword);
 };
 
-OfficeSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+OfficeSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
@@ -96,7 +95,7 @@ OfficeSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   return false;
 };
 
-OfficeSchema.methods.createPasswordResetToken = function() {
+OfficeSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   this.passwordResetToken = crypto
@@ -110,7 +109,6 @@ OfficeSchema.methods.createPasswordResetToken = function() {
 
   return resetToken;
 };
-
 
 const Office = mongoose.model('Office', OfficeSchema);
 

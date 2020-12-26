@@ -1,8 +1,7 @@
-const Office = require('./../models/officeDb');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const Office = require('../models/officeDb');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
-
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.office.id;
@@ -15,22 +14,26 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'This route is not for password updates. Please use /updateMyPassword.',
-        400
-      )
+        400,
+      ),
     );
   }
 
   // 3) Update Office document
-  const updatedOffice = await Office.findByIdAndUpdate(req.Office.id, filteredBody, {
-    new: true,
-    runValidators: true
-  });
+  const updatedOffice = await Office.findByIdAndUpdate(
+    req.Office.id,
+    filteredBody,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 
   res.status(200).json({
     status: 'success',
     data: {
-      Office: updatedOffice
-    }
+      Office: updatedOffice,
+    },
   });
 });
 
@@ -39,18 +42,16 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
   res.status(204).json({
     status: 'success',
-    data: null
+    data: null,
   });
 });
 
 exports.createOffice = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'This route is not defined! Please use /signup instead'
+    message: 'This route is not defined! Please use /signup instead',
   });
 };
-
-
 
 exports.getOffice = factory.getOne(Office);
 exports.getAllOffices = factory.getAll(Office);

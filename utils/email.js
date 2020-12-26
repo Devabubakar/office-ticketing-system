@@ -7,12 +7,12 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this._id = user._id
+    this._id = user._id;
     this.from = `Kirinyaga University <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'production' ) {
+    if (process.env.NODE_ENV === 'production') {
       // Sendgrid
       return nodemailer.createTransport({
         service: 'SendGrid',
@@ -22,7 +22,6 @@ module.exports = class Email {
         }
       });
     }
-    
 
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -34,14 +33,13 @@ module.exports = class Email {
     });
   }
 
-
   // Send the actual email
   async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
       url: this.url,
-      _id :this._id,
+      _id: this._id,
       subject
     });
 
@@ -61,11 +59,12 @@ module.exports = class Email {
   async sendWelcome() {
     await this.send('welcome', 'Office Ticketing System!');
   }
-  async Complete(){
+
+  async Complete() {
     await this.send(
       'complete',
       'Your Response ticket is Ready . Come and Collect it'
-    )
+    );
   }
 
   async sendPasswordReset() {

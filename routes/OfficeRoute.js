@@ -14,24 +14,19 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 // // // Protect all routes after this middleware
 router.use(authController.protect);
 
-
 router.patch('/updatepassword', authController.updatePassword);
-router.patch(
-  '/updateMe',
-  OfficeController.updateMe
-);
+router.patch('/updateMe', OfficeController.updateMe);
 router.get('/me', OfficeController.getMe, OfficeController.getOffice);
 
-//Admin//
+// Admin//
 /*
   Restricted Zone
 */
 router.use(authController.restrictTo('admin'));
 
-router.post('/create',authController.createOffice)
+router.post('/create', authController.createOffice);
 router.delete('/deleteMe', OfficeController.deleteMe);
-router.get('/alloffice',OfficeController.getAllOffices)
-  
+router.get('/alloffice', OfficeController.getAllOffices);
 
 router
   .route('/:id')

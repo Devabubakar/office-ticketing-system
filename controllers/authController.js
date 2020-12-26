@@ -1,10 +1,10 @@
 const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const Office = require('./../models/officeDb');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
-const Email = require('./../utils/email');
+const Office = require('../models/officeDb');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
+const Email = require('../utils/email');
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -44,9 +44,8 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
   // 3) If everything ok, send token to client
   createSendToken(newoffice, 200, req, res);
-  
 });
-exports.createOffice = catchAsync(async(req,res,next)=>{
+exports.createOffice = catchAsync(async (req, res, next) => {
   const newoffice = await Office.create({
     name: req.body.name,
     email: req.body.email,
@@ -56,16 +55,12 @@ exports.createOffice = catchAsync(async(req,res,next)=>{
   });
 
   res.status(201).json({
-    status:'success',
-    data:{
+    status: 'success',
+    data: {
       newoffice
     }
-  })
-
-  
-
-  
-})
+  });
+});
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -82,7 +77,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) If everything ok, send token to client
   createSendToken(user, 200, req, res);
- 
 });
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
@@ -181,8 +175,6 @@ exports.restrictTo = (...roles) => {
   };
 };
 
-
-
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const office = await Office.findOne({ email: req.body.email });
@@ -245,16 +237,15 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-
-  
-  
   // 1) Get user from collection
   const office = await Office.findById(req.office.id).select('+password');
-  
- // 2) Check if POSTed current password is correct
- if (!(await office.correctPassword(req.body.passwordCurrent, office.password))) {
-  return next(new AppError('Your current password is wrong.', 401));
-}
+
+  // 2) Check if POSTed current password is correct
+  if (
+    !(await office.correctPassword(req.body.passwordCurrent, office.password))
+  ) {
+    return next(new AppError('Your current password is wrong.', 401));
+  }
 
   // 3) If so, update password
   office.password = req.body.password;

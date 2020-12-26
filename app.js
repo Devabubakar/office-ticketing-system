@@ -11,12 +11,9 @@ const compression = require('compression');
 const cors = require('cors');
 
 const AppError = require('./utils/appError');
-const ticketRouter = require('./routes/ticketRoute')
-const OfficeRouter = require('./routes/OfficeRoute')
-const globalErrorHandler = require('./controllers/errorController')
-
-
-
+const ticketRouter = require('./routes/ticketRoute');
+const OfficeRouter = require('./routes/OfficeRoute');
+const globalErrorHandler = require('./controllers/errorController');
 
 // Start express app
 const app = express();
@@ -52,8 +49,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-
-
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
@@ -65,16 +60,12 @@ app.use(mongoSanitize());
 // Data sanitization against XSS
 app.use(xss());
 
-
 app.use(compression());
-
-
 
 // 3) ROUTES
 
-app.use('/api/v1/tickets',ticketRouter)
+app.use('/api/v1/tickets', ticketRouter);
 app.use('/api/v1/office', OfficeRouter);
-
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
@@ -88,7 +79,6 @@ module.exports = app;
   Copyright @ Abubakar Ali 
   Dec 2020
  */
-
 
 //Abubakar Ali 2020*//
 

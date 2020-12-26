@@ -1,6 +1,5 @@
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
-
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.deleteOne = Model =>
   catchAsync(async (req, res, next) => {
@@ -68,9 +67,8 @@ exports.getOne = (Model, popOptions) =>
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET reviews on tour (hack)
-    
-    let query = await Model.find()
 
+    const query = await Model.find();
 
     // const doc = await features.query.explain();
     const doc = await query;
@@ -85,7 +83,7 @@ exports.getAll = Model =>
     });
   });
 
-  /*
+/*
   Copyright @ Abubakar Ali 
   Dec 2020
  */
